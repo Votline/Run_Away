@@ -4,9 +4,6 @@ var move_direction: Vector3; var isMoving: bool; var isRunning: bool; var isCrou
 var current_speed:float; var walk_speed:float; var run_speed: float; var crouch_speed: float #Speed
 
 
-
-#DPGGSMk
-
 func _ready():
 	isMoving=false; isRunning=false; isCrouching=false; isSliding=false
 	current_speed=0; walk_speed=5; run_speed=10; crouch_speed=2; 
