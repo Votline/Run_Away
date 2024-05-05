@@ -1,12 +1,14 @@
 extends CharacterBody3D
 
-var move_direction: Vector3; var isMoving: bool; var isRunning: bool; var isCrouching: bool; var isSliding: bool; #Move
+var move_direction: Vector3; var isMoving: bool; var isRunning: bool; var isCrouching: bool; var isSliding: bool #Move
 var current_speed:float; var walk_speed:float; var run_speed: float; var crouch_speed: float #Speed
+var gravity: float 
 
 
 func _ready():
 	isMoving=false; isRunning=false; isCrouching=false; isSliding=false
-	current_speed=0; walk_speed=5; run_speed=10; crouch_speed=2; 
+	current_speed=0; walk_speed=5; run_speed=10; crouch_speed=2;
+	gravity = 9.8
 
 
 func _process(delta):
@@ -18,7 +20,7 @@ func _process(delta):
 func move(delta):
 	move_direction = Vector3(
 		Input.get_axis('move_left', 'move_right'), 
-		0 , 	
+		0, 	
 		Input.get_axis('move_forward', 'move_back')
 		)
 	if move_direction.x == 0 && move_direction.z == 0 && !isSliding:
@@ -48,3 +50,5 @@ func slide(delta):
 		translate(Vector3.FORWARD * current_speed * delta)
 	else:
 		isSliding=false;
+func physics():
+	pass
