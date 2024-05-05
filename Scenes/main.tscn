@@ -1,24 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfajcs3jyx58k"]
+[gd_scene load_steps=6 format=3 uid="uid://bfajcs3jyx58k"]
 
 [ext_resource type="PackedScene" uid="uid://d4gd7rsrno8ut" path="res://Entities/Players/player(bobby).tscn" id="1_d3r48"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_prbr3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w5o2j"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_0l6nw"]
+size = Vector3(1, 1.00891, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4mnxp"]
 
 [node name="Main" type="Node"]
 
-[node name="Ground" type="StaticBody3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 0.03, 0, 0, 0, 4, 0, 0, 0.000454411)
+[node name="Ground" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="Cube" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Cube"]
+transform = Transform3D(0.1, 0, 0, 0, -0.03, -1.74846e-08, 0, -5.24537e-09, 0.1, 1.58122, 0.787187, -4.91679)
+shape = SubResource("BoxShape3D_prbr3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Cube"]
+transform = Transform3D(0.847541, 0, 0, 0, -0.254262, -1.48189e-07, 0, -4.44566e-08, 0.847541, 1.58122, 0.787187, -4.91679)
+mesh = SubResource("BoxMesh_w5o2j")
+skeleton = NodePath("")
+
+[node name="Plane" type="StaticBody3D" parent="Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Plane"]
+transform = Transform3D(172.947, 0, 0, 0, 1.29711, 0, 0, 0, 172.947, 0, 0.00577934, 0.000454411)
 shape = SubResource("BoxShape3D_0l6nw")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Plane"]
+transform = Transform3D(172.947, 0, 0, 0, 1.29711, 0, 0, 0, 172.947, 0, 0, 0.000454411)
 mesh = SubResource("BoxMesh_4mnxp")
+skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.921109, 0.135674, -0.364899, 0.103351, 0.818456, 0.565198, 0.375337, -0.558322, 0.739865, -0.510462, 1.06878, 1.26501)
+transform = Transform3D(0.921109, 0.135674, -0.3649, 0.103351, 0.818456, 0.565198, 0.375337, -0.558322, 0.739864, -2.05409, 18.0682, 17.9444)
 
 [node name="Player(Bobby)" parent="." instance=ExtResource("1_d3r48")]
-transform = Transform3D(0.08, 0, 0, 0, 0.1, 0, 0, 0, 0.08, 0.0653783, 0.119945, 0.00470328)
+transform = Transform3D(1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0.0653783, 2.52758, 0.00470328)
