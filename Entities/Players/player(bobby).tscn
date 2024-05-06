@@ -17,6 +17,7 @@ shape = SubResource("CapsuleShape3D_2hytx")
 mesh = SubResource("CapsuleMesh_6p41u")
 
 [node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642548, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(12.5, 0, 0, 0, 10, 0, 0, 0, 12.5, 0, 0.634756, -0.188319)
+transform = Transform3D(12.5, 0, 0, 0, 10, 0, 0, 0, 12.5, 0, 0.0958999, -0.188319)
