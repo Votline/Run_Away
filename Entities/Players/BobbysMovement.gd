@@ -1,28 +1,32 @@
 extends CharacterBody3D
 
+var slide_direction: Vector3; var scale_normal: float; var scale_crouch: float; var scale_slide: float #Slide and crouch
 var direction; var input_dir; var isMoving: bool; var isRunning: bool; var isCrouching: bool; var isSliding: bool #Move
+var cb_frequency: float; var cb_amplitude: float; var cb_time: float; var cb_pos: Vector3 #Camera Bobbing
 var current_speed:float; var walk_speed:float; var run_speed: float; var crouch_speed: float #Speed
-var slide_direction: Vector3
-var gravity: float 
+
+const gravity = 9.8 
 
 
 @onready var head = $Head; @onready var camera = $Head/Camera3D #Head and Camera for MouseController
 @onready var sensitivity: float = 0.001 #Sens for mousecontroller
 
 func _unhandled_input(event): #Input handler
-	if event is InputEventMouseMotion: #Mouse handler
+	if event is InputEventMouseMotion: #Mouse event
 		head.rotate_y(-event.relative.x * sensitivity) #Rotate head
 		camera.rotate_x(-event.relative.y * sensitivity) #Rotate camera
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90)) #Camera clamp, now cant do somersaults
 		
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED) #hide mouse
-	isMoving=false; isRunning=false; isCrouching=false; isSliding=false
-	current_speed=0; walk_speed=5; run_speed=10; crouch_speed=2;
-	gravity = 9.8
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED); #hide mouse
+	isMoving=false; isRunning=false; isCrouching=false; isSliding=false; #Move
+	current_speed=0; walk_speed=5; run_speed=10; crouch_speed=2; #Speed
+	scale_normal=1.25; scale_crouch=0.8; scale_slide=0.5; #Scale
+	cb_frequency=2.8; cb_amplitude=0.08; #Camera Bobbing
+
 
 func _process(delta):
-	print(scale.y)
+	headbob(delta)
 	slide(delta)
 	move(delta)
 	crouch()
@@ -48,24 +52,30 @@ func move(delta):
 func run():
 	if !isSliding:
 		if isMoving && !isCrouching && Input.is_action_pressed("run"):
-			isRunning=true; current_speed=lerp(current_speed, run_speed, 0.07)
+			isRunning=true; current_speed=lerp(current_speed, run_speed, 0.07) #Smooth change speed to 10
 		if isRunning && Input.is_action_just_released("run"):
 			isRunning=false
 func crouch():
 	if !isSliding:
-		if !isRunning && Input.is_action_pressed("crouch"):
-			scale.y = lerp(scale.y, 0.8, 0.09)
-			isCrouching=true; current_speed=lerp(current_speed, crouch_speed, 0.07)
-		if isCrouching && Input.is_action_just_released("crouch"): isCrouching=false
-		if !isCrouching && !isSliding:
-			scale.y = lerp(scale.y, 1.25, 0.04)
+		if !isRunning && Input.is_action_pressed("crouch"):  #Crouch
+			current_speed=lerp(current_speed, crouch_speed, 0.07) #Smooth change speed to 2
+			scale.y = lerp(scale.y, scale_crouch, 0.09) #Smooth change scale CharacterBody3D(player(Bobby)) to 0.8
+			isCrouching=true; #Change value
+		if isCrouching && Input.is_action_just_released("crouch"): isCrouching=false #Get up
+		if !isCrouching && !isSliding: scale.y = lerp(scale.y, scale_normal, 0.04) #Smooth change scale, is also works for slide
 func slide(delta):
 	if current_speed>9.5 && Input.is_action_pressed("crouch"): isSliding=true
 	if isSliding && current_speed > 3:
-		slide_direction = -camera.global_transform.basis.z.normalized(); slide_direction.y = direction.y
-		scale.y = lerp(scale.y, 0.5, 0.09)
-
-		current_speed=lerp(current_speed, crouch_speed, 0.01)
-		translate(slide_direction * current_speed * delta)
+		slide_direction = -camera.global_transform.basis.z.normalized(); slide_direction.y = direction.y #Get direction for slide
+		current_speed=lerp(current_speed, crouch_speed, 0.01) #Smooth change speed to 2
+		translate(slide_direction * current_speed * delta) #moving the player in the direction for the camera
+		scale.y = lerp(scale.y, scale_slide, 0.09) #Smooth change scale to 0.5
 	else:
 		isSliding=false;
+		
+func headbob(delta): # Function for simulating camera bobbing
+	cb_time += delta * velocity.length() * float(is_on_floor()) # Increase the bobbing time based on the velocity and whether the camera is on the floor
+	cb_pos = Vector3.ZERO # Reset the camera position vector
+	cb_pos.y = sin(cb_time * cb_frequency) * cb_amplitude # Calculate the vertical position of the camera using a sine function
+	camera.transform.origin = cb_pos # Update the camera position
+
