@@ -1,10 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfajcs3jyx58k"]
+[gd_scene load_steps=6 format=3 uid="uid://bfajcs3jyx58k"]
 
 [ext_resource type="PackedScene" uid="uid://d4gd7rsrno8ut" path="res://Entities/Players/player(bobby).tscn" id="1_d3r48"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_prbr3"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_w5o2j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0l6nw"]
 size = Vector3(1, 1.00891, 1)
@@ -18,17 +14,6 @@ size = Vector3(1, 1.00891, 1)
 [node name="Main" type="Node"]
 
 [node name="Ground" type="Node3D" parent="."]
-
-[node name="Cube" type="StaticBody3D" parent="Ground"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Cube"]
-transform = Transform3D(0.1, 0, 0, 0, -0.03, -1.74846e-08, 0, -5.24537e-09, 0.1, 1.58122, 0.787187, -4.91679)
-shape = SubResource("BoxShape3D_prbr3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Cube"]
-transform = Transform3D(0.847541, 0, 0, 0, -0.254262, -1.48189e-07, 0, -4.44566e-08, 0.847541, 1.58122, 0.787187, -4.91679)
-mesh = SubResource("BoxMesh_w5o2j")
-skeleton = NodePath("")
 
 [node name="Plane" type="StaticBody3D" parent="Ground"]
 
@@ -50,8 +35,37 @@ shape = SubResource("BoxShape3D_qdqme")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Cube1"]
 mesh = SubResource("BoxMesh_6ghmh")
 
+[node name="Stairs" type="Node3D" parent="Ground"]
+
+[node name="Cube1" type="StaticBody3D" parent="Ground/Stairs"]
+transform = Transform3D(1, 0, 0, 0, 0.106751, 0, 0, 0, 1, 2.45756, 0.684436, -4.33884)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Stairs/Cube1"]
+shape = SubResource("BoxShape3D_qdqme")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Stairs/Cube1"]
+mesh = SubResource("BoxMesh_6ghmh")
+
+[node name="Cube2" type="StaticBody3D" parent="Ground/Stairs"]
+transform = Transform3D(1, 0, 0, 0, 0.106751, 0, 0, 0, 1, 2.45756, 0.780615, -5.31878)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Stairs/Cube2"]
+shape = SubResource("BoxShape3D_qdqme")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Stairs/Cube2"]
+mesh = SubResource("BoxMesh_6ghmh")
+
+[node name="Cube3" type="StaticBody3D" parent="Ground/Stairs"]
+transform = Transform3D(1, 0, 0, 0, 0.106751, 0, 0, 0, 1, 2.45756, 0.86334, -6.27064)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Stairs/Cube3"]
+shape = SubResource("BoxShape3D_qdqme")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Stairs/Cube3"]
+mesh = SubResource("BoxMesh_6ghmh")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.921109, 0.135674, -0.3649, 0.103351, 0.818456, 0.565198, 0.375337, -0.558322, 0.739864, -2.05409, 18.0682, 17.9444)
 
 [node name="Player(Bobby)" parent="." instance=ExtResource("1_d3r48")]
-transform = Transform3D(1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0.0653783, 2.52758, 0.00470328)
+transform = Transform3D(1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0.0653783, 11.9988, 0.00470328)
