@@ -38,7 +38,7 @@ mesh = SubResource("BoxMesh_6ghmh")
 [node name="Stairs" type="Node3D" parent="Ground"]
 
 [node name="Cube1" type="StaticBody3D" parent="Ground/Stairs"]
-transform = Transform3D(1, 0, 0, 0, 0.106751, 0, 0, 0, 1, 2.45756, 0.684436, -4.33884)
+transform = Transform3D(1, 0, 0, 0, 0.106751, 0, 0, 0, 1, 2.45756, 0.695771, -4.33884)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Stairs/Cube1"]
 shape = SubResource("BoxShape3D_qdqme")
@@ -68,4 +68,4 @@ mesh = SubResource("BoxMesh_6ghmh")
 transform = Transform3D(0.921109, 0.135674, -0.3649, 0.103351, 0.818456, 0.565198, 0.375337, -0.558322, 0.739864, -2.05409, 18.0682, 17.9444)
 
 [node name="Player(Bobby)" parent="." instance=ExtResource("1_d3r48")]
-transform = Transform3D(1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0.0653783, 11.9988, 0.00470328)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.91339, 2.27961, 1.32088)
